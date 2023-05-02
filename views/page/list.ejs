@@ -1,0 +1,56 @@
+<section>
+    <div>
+        <p>List</p>
+        <% for( var i=0; i < bookList.length; i++ ) { %>
+        <div style="border:1px solid black">
+            <div>
+                <p>
+                    이름
+                </p>
+                <p>
+                    <%= bookList[i].book_title %>
+                </p>
+            </div>
+            <div>
+                <p>
+                    책 설명
+                </p>
+                <p>
+                    <%= bookList[i].book_desc %>
+                </p>
+            </div>
+            <div>
+                <p>
+                    재고
+                </p>
+                <p>
+                    <%= bookList[i].book_qty %>
+                </p>
+            </div>
+            <div>
+                <p>
+                    가격
+                </p>
+                <p>
+                    <%= bookList[i].book_price %>
+                </p>
+            </div>
+            <div>
+                <p>
+                    장르
+                </p>
+                <p>
+                    <%= bookList[i].book_gn %>
+                </p>
+            </div>
+
+            <div>
+                <form>
+                    <button>장바구니 추가</button>
+                    <button>구매</button>
+                </form>
+            </div>
+        </div>
+        <% } %>
+    </div>
+</section>
