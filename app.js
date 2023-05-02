@@ -20,8 +20,6 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 Router.forEach((item) => {
-  console.log('test');
-  console.log(item.path);
   const { path, cont } = item;
   app.use(path, cont);
 });
