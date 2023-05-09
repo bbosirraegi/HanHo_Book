@@ -7,14 +7,13 @@ router.get('/', function (req, res, netxt) {
 });
 
 router.post('/add', async function (req, res, next) {
-  console.log('HERE');
-  console.log(req.body);
   try {
-    // Params
     const result = await AddBookService.addBook(req.body);
 
-    console.log('Result');
-    console.log(result);
+    // Go to List
+    if (result) {
+      res.redirect('/list');
+    }
   } catch (e) {
     console.log(e);
   }

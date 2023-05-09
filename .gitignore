@@ -5,7 +5,7 @@
 .env
 mysqldata/
 docker-compose.yml
-
+utils/sql.js
 
 ### Git ###
 # Created by git for backups. To disable backups in Git:

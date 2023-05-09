@@ -8,7 +8,7 @@ const AddBookService = {
       if (result) {
         return result;
       } else {
-        console.log('Service Faile ');
+        console.log('AddBook Service Failed');
       }
     } catch (e) {
       console.log(e);

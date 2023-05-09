@@ -1,3 +1,4 @@
+
 <section>
     <div>
         <p>List</p>
@@ -45,9 +46,11 @@
             </div>
 
             <div>
-                <form>
-                    <button>장바구니 추가</button>
-                    <button>구매</button>
+                <form method="post" id="listform">
+                    <input type="hidden" name="info" value="<%= bookList[i] %>" />
+                    <button type="submit" id="submit" name="submit" value="add">장바구니 추가</button>
+                    <button type="submit" id="submit" name="submit" value="order">구매</button>
+                    <button type="submit" id="submit" name="submit" value="delete">삭제</button>
                 </form>
             </div>
         </div>

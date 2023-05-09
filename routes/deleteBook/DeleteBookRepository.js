@@ -1,19 +1,20 @@
-// DataBase와 관련된 작업을 수행
-
 const db = require('../../utils/db');
 const sqls = require('../../utils/sql');
 
-const ListRepository = {
-  getBookList: async () => {
+const DeleteBookRepository = {
+  deleteBook: async (info) => {
     try {
-      const query = sqls.listQuery();
+      const query = sqls.deleteQuery(info);
       const conn = await db.getConnection();
       const [result] = await conn.query(query);
-      return result;
+
+      if (result) {
+        return result;
+      } else {
+        console.log('Repository Failed');
+      }
     } catch (e) {
       console.log(e);
     }
   },
 };
-
-module.exports = ListRepository;
