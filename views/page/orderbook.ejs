@@ -1,0 +1,37 @@
+<script>
+    function cal() {
+        const qty = document.getElementById("qty").value;
+        const price = document.getElementById("price").value;
+
+        let total;
+
+        // 숫자외 입력 불가 처리 변경 예정
+        if( isNaN(parseInt(qty)) ){ total = 0; }
+        else { total = parseInt(qty) * parseInt(price); }
+
+        document.getElementById('total').value = total;
+    };
+
+    window.onload = function() { cal(); };
+</script>
+
+<section>
+    <div>
+        <p><%= detailBook.title %></p>
+        <form action="/orderbook/orderBook" method="post">
+            <p>Address</p>
+            <input type="text" name="address" placeholder="Address" />
+            <p>Phone</p>
+            <input type="text" name="phone" placeholder="Phone" />
+            <p>Price</p>
+            <input type="text" id="price" name="price" readonly="readonly" value="<%= detailBook.price %>" />
+            <p>수량</p>
+            <input type="number" id="qty" name="qty" onchange="cal()" oninput="cal()" value="<%= detailBook.qty %>" />
+            <p>총액</p>
+            <input type="text" id="total" name="total" readonly="readonly" />
+            <input type="hidden" name="book_id" value="<%= detailBook.book_id %>" />
+            <button type="submit" >주문</button>
+            <button type="submit" formaction="/list" formmethod="get">취소</button>
+        </form>
+    </div>
+</section>

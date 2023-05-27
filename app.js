@@ -19,6 +19,25 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+app.use(
+  session({
+    secret: process.env.SESSION_KEY,
+    resave: false,
+    saveUninitialized: true,
+  })
+);
+
+app.use((req, res, next) => {
+  if (req.session.user) {
+    res.locals.login = true;
+    res.locals.user = req.session.user;
+  } else {
+    res.locals.login = false;
+    res.locals.user = null;
+  }
+  next();
+});
+
 Router.forEach((item) => {
   const { path, cont } = item;
   app.use(path, cont);
@@ -28,14 +47,6 @@ Router.forEach((item) => {
 app.use(function (req, res, next) {
   next(createError(404));
 });
-
-app.use(
-  session({
-    secret: process.env.SECRET_KEY,
-    resacve: false,
-    saveUninitialized: true,
-  })
-);
 
 // error handler
 app.use(function (err, req, res, next) {

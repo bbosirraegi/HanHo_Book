@@ -12,10 +12,15 @@ router.post('/add', async function (req, res, next) {
 
     // Go to List
     if (result) {
+      // res.status(200).json({ message: 'AddBook Success' });
+      res.redirect('/list');
+    } else {
+      res.status(404).json({ message: 'AddBook Failed' });
       res.redirect('/list');
     }
   } catch (e) {
-    console.log(e);
+    res.status(500).json({ error: 'DatabaseError' });
+    res.redirect('/list');
   }
 });
 

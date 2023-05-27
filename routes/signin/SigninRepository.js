@@ -1,20 +1,25 @@
 const db = require('../../utils/db');
 const sqls = require('../../utils/sql');
 
-const DeleteBookRepository = {
-  deleteBook: async (info) => {
+const SigninRepository = {
+  detailUser: async (info) => {
     try {
-      const query = sqls.deleteQuery(info);
+      const query = sqls.detailuserQuery(info);
       const conn = await db.getConnection();
       const [result] = await conn.query(query);
 
-      if (result) {
+      console.log('Result');
+      console.log(result);
+
+      if (result.length >= 1) {
         return result;
       } else {
-        console.log('Repository Failed');
+        console.log('Signin Repository Failed');
       }
     } catch (e) {
       console.log(e);
     }
   },
 };
+
+module.exports = SigninRepository;

@@ -1,0 +1,56 @@
+<section>
+    <div>
+        <p>Detail</p>
+        <div>
+            <p>
+                이름
+            </p>
+            <p>
+                <%= bookDetail[0].book_title %>
+            </p>
+        </div>
+        <div>
+            <p>
+                설명
+            </p>
+            <p>
+                <%= bookDetail[0].book_desc %>
+            </p>
+        </div>
+        <div>
+            <p>
+                재고
+            </p>
+            <p>
+                <%= bookDetail[0].book_qty %>
+            </p>
+        </div>
+        <div>
+            <p>
+                가격
+            </p>
+            <p>
+                <%= bookDetail[0].book_price %>
+            </p>
+        </div>
+        <div>
+            <p>
+                장르
+            </p>
+            <p>
+                <%= bookDetail[0].book_gn %>
+            </p>
+        </div>
+    </div>
+    <div>
+        <form method="post">
+            <input type="number" name="qty" placeholder='수량' />
+            <input type="hidden" name="book_id" value="<%= bookDetail[0].book_id %>" />
+            <input type="hidden" name="price" value="<%= bookDetail[0].book_price %>" />
+            <input type="hidden" name="title" value="<%= bookDetail[0].book_title %>" />
+            <button type="submit" >장바구니</button>
+            <button type="submit" formaction="/orderbook" formmethod="post">구매</button>
+            <button type="submit" onclick="location.href='/list'" >취소</button>
+        </form>
+    </div>
+</section>
