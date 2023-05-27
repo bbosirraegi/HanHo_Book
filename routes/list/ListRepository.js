@@ -1,25 +1,34 @@
-// DataBase와 관련된 작업을 수행
-
 const db = require('../../utils/db');
-
-const sqlquery = {
-  listQuery: () => {
-    return `
-        SELECT
-            book_id,book_title,book_qty,book_price,book_desc,book_img,book_gn
-        FROM
-            t_book
-    `;
-  },
-};
+const sqls = require('../../utils/sql');
 
 const ListRepository = {
   getBookList: async () => {
     try {
-      const query = sqlquery.listQuery();
+      const query = sqls.listBookQuery();
       const conn = await db.getConnection();
       const [result] = await conn.query(query);
-      return result;
+
+      if (result) {
+        return result;
+      } else {
+        console.log('Repository Failed');
+      }
+    } catch (e) {
+      console.log(e);
+    }
+  },
+
+  deleteBook: async (info) => {
+    try {
+      const query = sqls.deleteQuery(info);
+      const conn = await db.getConnection();
+      cosnt[result] = await conn.query(query);
+
+      if (result) {
+        return result;
+      } else {
+        console.log('Repository Failed');
+      }
     } catch (e) {
       console.log(e);
     }

@@ -1,18 +1,26 @@
-const express = requrie('express');
+const express = require('express');
 const router = express.Router();
-const ListService = require('../List/ListService');
 const AddBookService = require('./AddBookService');
 
 router.get('/', function (req, res, netxt) {
-  res.render('index', { page: 'page/addbook' });
+  res.render('index', { page: 'page/addBook' });
 });
 
-router.post('/addbook', async function (req, res, next) {
+router.post('/add', async function (req, res, next) {
   try {
-    // Params
-    const result = await ListService.getList();
+    const result = await AddBookService.addBook(req.body);
+
+    // Go to List
+    if (result) {
+      // res.status(200).json({ message: 'AddBook Success' });
+      res.redirect('/list');
+    } else {
+      res.status(404).json({ message: 'AddBook Failed' });
+      res.redirect('/list');
+    }
   } catch (e) {
-    console.log(e);
+    res.status(500).json({ error: 'DatabaseError' });
+    res.redirect('/list');
   }
 });
 

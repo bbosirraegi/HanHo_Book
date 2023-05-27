@@ -3,7 +3,7 @@
         <p>List</p>
         <% for( var i=0; i < bookList.length; i++ ) { %>
         <div style="border:1px solid black">
-            <div>
+            <div onclick="window.location.href='/detailBook/<%= bookList[i].book_id %>'">
                 <p>
                     이름
                 </p>
@@ -46,8 +46,15 @@
 
             <div>
                 <form>
-                    <button>장바구니 추가</button>
-                    <button>구매</button>
+                    <input type="hidden" name="id" value="<%= bookList[i].book_id %>" />
+                    <input type="hidden" name="title" value="<%= bookList[i].book_title %>" />
+                    <input type="hidden" name="desc" value="<%= bookList[i].book_desc %>" />
+                    <input type="hidden" name="qty" value="<%= bookList[i].book_qty %>" />
+                    <input type="hidden" name="price" value="<%= bookList[i].book_price %>" />
+                    <input type="hidden" name="gn" value="<%= bookList[i].book_gn %>" />
+                    <button type="submit">장바구니 추가</button>
+                    <button type="submit">구매</button>
+                    <button type="submit" formaction="/deletebook" formmethod="post">삭제</button>
                 </form>
             </div>
         </div>
