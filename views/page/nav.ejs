@@ -1,0 +1,14 @@
+
+<% if (login) { %>
+    <nav>
+        <div>
+            <button type="button" onclick="location.href='/signin/signout'"  >로그아웃</button>
+        </div>
+    </nav>
+<% } else { %>
+    <nav>
+        <div>
+            <button type="button" onclick="location.href='/signin'" >로그인</button>
+        </div>
+    </nav> 
+<% } %>

@@ -13,6 +13,15 @@ const sql = {
     `;
   },
 
+  // 유저 등록
+  signupQuery: (info) => {
+    return `
+      INSERT INTO
+        t_user
+      VALUES( '${info.user_id}', '${info.user_pw}', '${info.user_nm}', 'vip1', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP )
+    `;
+  },
+
   // 도서 전체 조회
   listBookQuery: () => {
     return `
@@ -40,10 +49,10 @@ const sql = {
 
     // 모두 String으로 받아오는 문제
     return `
-            INSERT INTO 
-              t_book( book_id, book_title, book_qty, book_price, book_desc, book_img, book_gn )
-            VALUES( '${uuidbox}', '${info.title}', ${info.qty}, ${info.price}, '${info.desc}', '${info.img}', '${info.gn}' )
-            `;
+      INSERT INTO 
+        t_book( book_id, book_title, book_qty, book_price, book_desc, book_img, book_gn )
+      VALUES( '${uuidbox}', '${info.title}', ${info.qty}, ${info.price}, '${info.desc}', '${info.img}', '${info.gn}' )
+    `;
   },
 
   // 도서 삭제
@@ -61,8 +70,8 @@ const sql = {
   orderQuery: (info) => {
     return `
       INSERT INTO 
-        t_order( order_id, user_id, order_date, order_total )
-      VALUES( '${info.orderid}', '${info.userid}', CURRENT_TIMESTAMP, ${info.total} )
+        t_order( order_id, user_id, order_date, order_total, order_postcode, order_address, order_phone, order_card )
+      VALUES( '${info.order_id}', '${info.user_id}', CURRENT_TIMESTAMP, ${info.order_total}, '${info.order_postcode}', '${info.order_address}', '${info.order_phone}', '${info.card}' )
     `;
   },
 
@@ -70,8 +79,8 @@ const sql = {
   orderdetailQuery: (info) => {
     return `
       INSERT INTO
-        t_order_detail( t_book_book_id, t_order_order_id, order_qty, order_address, order_phone )
-      VALUES( '${info.book_id}', '${info.orderid}', ${info.qty}, '${info.address}', '${info.phone}' )
+        t_order_detail( book_id, order_id, order_detail_price, order_detail_qty, order_detail_total )
+      VALUES( '${info.book_id}', '${info.order_id}', ${info.order_detail_price}, '${info.order_detail_qty}', '${info.order_detail_total}' )
     `;
   },
 };

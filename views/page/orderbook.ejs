@@ -1,0 +1,100 @@
+
+<script>
+
+    function checkblank() {
+
+        if( 
+            document.getElementById('postcode').value === "" ||
+            document.getElementById('detailaddress').value === "" ||
+            document.getElementById('phone').value === "" ||
+            document.getElementById('qty').value === ""
+        ) {
+            alert( '모든 항목을 입력해주세요' );
+            return false;
+        }else {
+            return true;
+        }
+    }
+
+    function findaddress() {
+
+        new daum.Postcode({
+            oncomplete: function( data ) {
+
+                console.log(data);
+
+                let addr = '';
+                let extraAddr = '';
+
+                if( data.userSelectedType === 'R' ){
+                    addr = data.roadAddress;
+                } else {
+                    addr = data.jibunAddress;
+                }
+
+                if( data.userSelectedType == 'R' ) {
+                    if( data.bname !== '' && /[동|로|가|]$/g.test(data.bname)){
+                        extraAddr += data.bname;
+                    }
+                    if( data.buildingName !== '' && data.apartment === "Y" ) {
+                        extraAddr += ( extraAddr !== '' ? ', ' + data.buildingName : data.buildingName );
+                    }
+
+                    if( extraAddr !== '' ){
+                        extraAddr = ' (' + extraAddr + ")";
+                    }
+
+                    document.getElementById('extraaddress').value = extraAddr;
+                } else {
+                    document.getElementById('extraaddress').value = '';
+                }
+
+                document.getElementById('postcode').value = data.zonecode;
+                document.getElementById('address').value = addr;
+                document.getElementById('detailaddress').focus();
+
+            }
+        }).open();
+    }
+
+    function cal() {
+        const qty = document.getElementById("qty").value;
+        const price = document.getElementById("price").value;
+
+        let total;
+
+        // 숫자외 입력 불가 처리 변경 예정
+        if( isNaN(parseInt(qty)) ){ total = 0; }
+        else { total = parseInt(qty) * parseInt(price); }
+
+        document.getElementById('total').value = total;
+    };
+
+    window.onload = function() { cal(); };
+</script>
+
+<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+<section>
+    <div>
+        <p><%= detailBook.title %></p>
+        <form action="/orderbook/orderBook" method="post" onsubmit="return checkblank()">
+            <p>Address</p>
+            <input type="button" onclick="findaddress()" value="주소 찾기" >
+            <input type="text" id="postcode" name="order_postcode" placeholder="우편 번호" readonly="readonly" />
+            <input type="text" id="address" name="order_address" placeholder="주소" readonly="readonly" />
+            <input type="text" id="detailaddress" name="order_detailaddress" placeholder="상세 주소" />
+            <input type="text" id="extraaddress" placeholder="참고 항목" readonly="readonly" />
+            <p>Phone</p>
+            <input type="text" name="order_phone" placeholder="Phone" />
+            <p>Price</p>
+            <input type="text" id="price" name="order_price" value="<%= detailBook.price %>" readonly="readonly" />
+            <p>수량</p>
+            <input type="number" id="qty" name="order_qty" onchange="cal()" oninput="cal()" value="<%= detailBook.qty %>" />
+            <p>총액</p>
+            <input type="text" id="total" name="order_total" readonly="readonly" />
+            <input type="hidden" name="book_id" value="<%= detailBook.book_id %>" />
+            <button type="submit" >주문</button>
+            <button type="submit" formaction="/list" formmethod="get">취소</button>
+        </form>
+    </div>
+</section>
