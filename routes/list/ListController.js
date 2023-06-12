@@ -23,13 +23,3 @@ router.get('/', async function (req, res, next) {
 });
 
 module.exports = router;
-
-const VerifierReport = {
-  'Task id': string,
-  'User id': string,
-  Answer: string,
-  Stack: float,
-  'Verifier reputation': float,
-  Statue: 'Verified',
-  Time: float,
-};
