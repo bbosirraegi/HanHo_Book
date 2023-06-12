@@ -13,19 +13,26 @@ router.get('/', async (req, res, next) => {
 
 // 로그인
 router.post('/signin', async (req, res, next) => {
-  if (!req.session.user) {
-    const result = await SigninService.detailUser(req.body);
+  try {
+    if (!req.session.user) {
+      const result = await SigninService.detailUser(req.body);
 
-    // 세션 생성
-    if (result) {
-      req.session.user = {
-        id: result.user_id,
-        name: result.user_nm,
-        authorized: true,
-      };
+      // 세션 생성
+      if (result) {
+        req.session.user = {
+          id: result.user_id,
+          name: result.user_nm,
+          authorized: true,
+        };
+        res.redirect('/list');
+      } else {
+        res.redirect('/signin');
+      }
     }
+  } catch (e) {
+    console.log(e);
+    res.redirect('/signin');
   }
-  res.redirect('/list');
 });
 
 // 로그아웃
@@ -39,7 +46,6 @@ router.get('/signout', async (req, res, next) => {
         console.log(err);
       }
     });
-    res.redirect('/list');
   }
   res.redirect('/list');
 });

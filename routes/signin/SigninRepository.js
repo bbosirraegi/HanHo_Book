@@ -8,13 +8,14 @@ const SigninRepository = {
       const conn = await db.getConnection();
       const [result] = await conn.query(query);
 
-      console.log('Result');
+      console.log('Sign Result');
       console.log(result);
 
       if (result.length >= 1) {
         return result;
       } else {
         console.log('Signin Repository Failed');
+        return false;
       }
     } catch (e) {
       console.log(e);

@@ -1,17 +1,19 @@
 const db = require('../../utils/db');
 const sqls = require('../../utils/sql');
 
-const AddBookRepository = {
-  addBook: async (info) => {
+const SignupRepository = {
+  signUp: async (info) => {
     try {
-      const query = sqls.addQuery(info);
+      const query = sqls.signupQuery(info);
+
       const conn = await db.getConnection();
-      const [result] = await conn.query(query);
+
+      const result = await conn.query(query);
 
       if (result) {
         return result;
       } else {
-        console.log('Repository Failed');
+        return false;
       }
     } catch (e) {
       console.log(e);
@@ -20,4 +22,4 @@ const AddBookRepository = {
   },
 };
 
-module.exports = AddBookRepository;
+module.exports = SignupRepository;

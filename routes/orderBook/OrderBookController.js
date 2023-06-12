@@ -11,6 +11,13 @@ router.get('/', async function (req, res, next) {
 });
 
 router.post('/', async function (req, res, next) {
+  console.log('Session');
+  console.log(req.session.user);
+
+  if (!req.session.user) {
+    res.redirect('/list');
+  }
+
   try {
     if (req.body) {
       console.log('BODY');
@@ -24,13 +31,20 @@ router.post('/', async function (req, res, next) {
   }
 });
 
+// 단일 주문
 router.post('/orderBook', async function (req, res, next) {
   try {
     const result = await OrderBookService.orderBook(req.body);
     if (result) {
       console.log('DetailBook Controller Success');
+
+      console.log('result');
+      console.log(result);
+
+      res.redirect('/list');
     } else {
       console.log('Fail');
+      res.send(`<script>window.history.back();</script>`);
     }
   } catch (e) {
     console.log(e);

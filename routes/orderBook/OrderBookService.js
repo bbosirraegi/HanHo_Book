@@ -6,14 +6,24 @@ const OrderBookService = {
     try {
       const uuidbox = uuid.v4();
 
-      info.orderid = uuidbox;
-      info.userid = 'name1';
+      // Order
+      info.order_id = uuidbox;
+      info.user_id = 'name1';
 
-      console.log('DetailBook Service Info');
-      console.log(info);
+      info.order_address += ' ';
+      info.order_address += info.order_detailaddress;
+
+      // Order Detail
+      info.order_detail_price = info.order_price;
+      info.order_detail_qty = info.order_qty;
+      info.order_detail_total = info.order_total;
+
       const result = await OrderBookRepository.orderBook(info);
+
+      return result;
     } catch (e) {
       console.log(e);
+      return;
     }
   },
 };
